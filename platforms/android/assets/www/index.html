@@ -22,20 +22,27 @@
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+    	<meta name="apple-mobile-web-app-status-bar-style" content="black">
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
+        <link href="css/ratchet.min.css" rel="stylesheet">
         <title>Hello World</title>
     </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
+    	<body>
+        	<!-- Make sure all your bars are the first things in your <body> -->
+    	<header class="bar bar-nav">
+  			<a class="icon icon-plus pull-right"></a>
+  		</header>
+        
+        <div class="bar bar-standard bar-footer">
+  			<a class="icon icon-pause pull-left"></a>
+  			<a class="icon icon-play pull-right"></a>
+		</div>
+
+    	<script type="text/javascript" src="cordova.js"></script>
+        <script src="js/ratchet.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>
 </html>
