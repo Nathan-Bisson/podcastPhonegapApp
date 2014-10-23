@@ -59,6 +59,66 @@ body {
                                    /* offset horizontal: half of text area width */
 }
 
+
+/*--------PODCAST APP-----------*/
+
+.show{
+	display:block;
+}
+
+.hide{
+	display:none;
+}
+#firstPageHeader{
+	padding-top:10px;
+	width:90%;
+	float:left;
+	padding-left:13%;
+	color:#428bca;
+}
+#addBtn{
+	float:left;
+}
+#podcastList{
+	padding-top:45px;
+}
+.icon-forward{
+	padding-left:25%;
+}
+.icon-back{
+	padding-left:20%;
+}
+.icon-right{
+	position:relative;
+	left:20%;
+	font-size:1rem;
+	line-height:1.5rem;
+}
+.podcastLi{
+	width:100%;
+}
+#addPodcastPageHeader{
+	padding-top:10px;
+	width:90%;
+	float:left;
+	padding-right:3%;
+	color:#428bca;
+}
+
+#addPodcastDiv{
+	padding-top:60px;
+}
+form{
+	width:90%;
+	margin:0 auto;
+}
+button{
+	background-color:#003E7A;
+}
+
+/*-------END PODCAST APP----------*/
+
+
 /* Landscape layout (with min-width) */
 @media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
     .app {

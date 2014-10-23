@@ -50,6 +50,7 @@
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/fonts/ratchicons.woff \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/img/logo.png \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/js/index.js \
+/Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/js/jquery 2.1.0.js \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/js/ratchet.js \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/js/ratchet.min.js \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/plugins/org.apache.cordova.file \

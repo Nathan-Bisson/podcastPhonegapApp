@@ -21,6 +21,7 @@ var app = {
     initialize: function() {
         this.bindEvents();
     },
+	
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
@@ -40,3 +41,43 @@ var app = {
 };
 
 app.initialize();
+
+$( "#firstPage" ).addClass( "show" );
+$( "#secondPage" ).addClass( "hide" );
+$( "#addPodcastPage" ).addClass( "hide" );
+
+$('.podcastLi').on('click', function() {
+	$( "#firstPage" ).removeClass( "show" );
+	$( "#firstPage" ).addClass( "hide" );
+	$( "#secondPage" ).removeClass( "hide" );
+	$( "#secondPage" ).addClass( "show" );
+	$( "#addPodcastPage" ).removeClass( "show" );
+	$( "#addPodcastPage" ).addClass( "hide" );
+});
+
+$('.backBtn').on('click', function() {
+	$( "#firstPage" ).removeClass( "hide" );
+	$( "#firstPage" ).addClass( "show" );
+	$( "#secondPage" ).removeClass( "show" );
+	$( "#secondPage" ).addClass( "hide" );
+	$( "#addPodcastPage" ).removeClass( "show" );
+	$( "#addPodcastPage" ).addClass( "hide" );
+});
+
+$('#addBtn').on('click', function() {
+	$( "#addPodcastPage" ).removeClass( "hide" );
+	$( "#addPodcastPage" ).addClass( "show" );
+	$( "#firstPage" ).removeClass( "show" );
+	$( "#firstPage" ).addClass( "hide" );
+	$( "#secondPage" ).removeClass( "show" );
+	$( "#secondPage" ).addClass( "hide" );
+});
+
+
+
+
+
+
+
+
+
