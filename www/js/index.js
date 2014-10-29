@@ -66,6 +66,7 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         //app.receivedEvent('deviceready');
+		loadCastList();
     },
     // Update DOM on a Received Event
     
@@ -120,21 +121,24 @@ function addPodcast(podcastName, podcastURI) {
 						var channelTag = xmlDoc.getElementsByTagName('channel')[0];
 						var itemTag = channelTag.getElementsByTagName('item')[i];
 						var imageTag = channelTag.getElementsByTagName('image')[0];
-						var androidFile = cordova.file.dataDirectory;
-						console.log(androidFile);
 						
 						var itemTitle = itemTag.getElementsByTagName('title')[0].childNodes[0].nodeValue; //Holds Podcast title value
 						console.log(itemTitle);
 						var itemImage = imageTag.getElementsByTagName('url')[0].childNodes[0].nodeValue; //Holds Podcast image value
 						console.log(itemImage);
 						var itemFile = itemTag.getElementsByTagName('origEnclosureLink')[0].childNodes[0].nodeValue; //Holds Podcast MP3 value
+						
 						var encodedFile = encodeURI(itemFile);
 						console.log(itemFile);
 						console.log(encodedFile);
 						
 						//Download Podcast episode here
+						var androidFile = cordova.file.dataDirectory;
+						var addFileName = encodedFile.split('/');
+						console.log(addFileName[4]);
+						
 						var fileTransfer = new FileTransfer();
-						fileTransfer.download(encodedFile, androidFile,
+						fileTransfer.download(encodedFile, androidFile + addFileName[4],
 							function(entry) {
 								console.log("download complete: " + entry.toURL());
 							},
@@ -142,7 +146,7 @@ function addPodcast(podcastName, podcastURI) {
 								console.log("download complete: " + error.code());
 							},
 							true
-							);
+						);
 						
 						alert("Podcast added!");
 					}
@@ -154,8 +158,9 @@ function addPodcast(podcastName, podcastURI) {
 	
 }
 
-
-
+function loadCastList() {
+	
+}
 
 
 
