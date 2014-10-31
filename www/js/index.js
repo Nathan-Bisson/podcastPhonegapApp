@@ -137,7 +137,7 @@ function addPodcast(podcastName, podcastURI) {
 						var addFileName = encodedFile.split('/');
 						console.log(addFileName[4]);
 						
-						var fileTransfer = new FileTransfer();
+						/*var fileTransfer = new FileTransfer();
 						fileTransfer.download(encodedFile, androidFile + addFileName[4],
 							function(entry) {
 								console.log("download complete: " + entry.toURL());
@@ -146,10 +146,24 @@ function addPodcast(podcastName, podcastURI) {
 								console.log("download complete: " + error.code());
 							},
 							true
-						);
+						);*/
+						
+						if (localStorage.getItem("podcasts") === null) {
+							var podcasts = [];
+							podcasts.push({title: itemTitle , image: itemImage , url: itemFile });
+							localStorage.setItem('podcasts', JSON.stringify(podcasts));
+							console.log(localStorage.getItem('podcasts'));
+						} else {
+							var podcasts = JSON.parse(localStorage.getItem('podcasts') || []);
+							podcasts.push({title: itemTitle , image: itemImage , url: itemFile });
+   							localStorage.setItem('podcasts', JSON.stringify(podcasts));
+							console.log(localStorage.getItem('podcasts'));
+						}
 						
 						alert("Podcast added!");
 					}
+					
+					
 				}           
 			}       
 		}   
@@ -159,7 +173,12 @@ function addPodcast(podcastName, podcastURI) {
 }
 
 function loadCastList() {
-	
+	/*
+		window.resolveLocalFileSystemURI(cordova.file.dataDirectory, funtction(dirEntry) {
+			var reader = dirEntry.createReader();
+			// profit
+		})
+*/
 }
 
 
