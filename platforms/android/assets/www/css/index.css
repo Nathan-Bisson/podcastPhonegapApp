@@ -115,6 +115,44 @@ form{
 button{
 	background-color:#003E7A;
 }
+#podcastTitle{
+	padding-top:75px;
+	width:80%;
+	margin:0 auto;
+	text-align:center;
+}
+#podcastImg{
+	width:100%;
+	text-align:center;
+}
+#progressBarDiv{
+	padding-top:30px;
+	padding-bottom:50px;
+}
+#progressbar {
+   background-color:#BCBCBC;
+  border-radius: 13px;
+  width:60%;
+  height:10px;
+  margin:0 auto;
+}
+
+#progress {
+   background-color:#363636;
+   height: 10px;
+   border-radius: 10px;
+}
+#volumeLabel{
+	width:100%;
+	text-align:center;
+}
+#volumeSliderDiv{
+	position:relative;
+	left:-10%;
+}
+input.ui-slider-input {
+        display : none;
+}
 
 /*-------END PODCAST APP----------*/
 

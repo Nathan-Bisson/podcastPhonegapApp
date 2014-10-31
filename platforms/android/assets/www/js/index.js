@@ -40,8 +40,10 @@ var app = {
 			$( "#secondPage" ).addClass( "show" );
 			$( "#addPodcastPage" ).removeClass( "show" );
 			$( "#addPodcastPage" ).addClass( "hide" );
+			
+			playPodcast();
 		});
-
+		
 		$('.backBtn').on('click', function() {
 			$( "#firstPage" ).removeClass( "hide" );
 			$( "#firstPage" ).addClass( "show" );
@@ -49,8 +51,12 @@ var app = {
 			$( "#secondPage" ).addClass( "hide" );
 			$( "#addPodcastPage" ).removeClass( "show" );
 			$( "#addPodcastPage" ).addClass( "hide" );
+			
+			document.getElementById("podcastTitle").innerHTML = "";
+			document.getElementById("podcastImg").innerHTML = "";
+			document.getElementById("progressBarDiv").innerHTML = "";
 		});
-
+		
 		$('#addBtn').on('click', function() {
 			$( "#addPodcastPage" ).removeClass( "hide" );
 			$( "#addPodcastPage" ).addClass( "show" );
@@ -66,7 +72,6 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         //app.receivedEvent('deviceready');
-		loadCastList();
     },
     // Update DOM on a Received Event
     
@@ -137,7 +142,7 @@ function addPodcast(podcastName, podcastURI) {
 						var addFileName = encodedFile.split('/');
 						console.log(addFileName[4]);
 						
-						/*var fileTransfer = new FileTransfer();
+						var fileTransfer = new FileTransfer();
 						fileTransfer.download(encodedFile, androidFile + addFileName[4],
 							function(entry) {
 								console.log("download complete: " + entry.toURL());
@@ -146,7 +151,7 @@ function addPodcast(podcastName, podcastURI) {
 								console.log("download complete: " + error.code());
 							},
 							true
-						);*/
+						);
 						
 						if (localStorage.getItem("podcasts") === null) {
 							var podcasts = [];
@@ -180,6 +185,84 @@ function loadCastList() {
 		})
 */
 }
+
+function playPodcast(){
+	var podcastTitle = "The Podcast Title";
+	var podcastImgSrc = "img/SamplePhoto.jpg";
+	
+	var media = new Media("https://dl.dropboxusercontent.com/u/887989/test.mp3",
+	
+		function () {
+			console.log("playAudio():Audio Success");
+		},
+		function (err) {
+			console.log("playAudio():Audio Error: " + err);
+		}
+	);
+	
+	media.setVolume(1);
+	media.play();
+	
+	$('#podcastTitle').append("<p>" + podcastTitle + "</p>");
+	
+	$('#podcastImg').prepend('<img src="' + podcastImgSrc + '" />');
+	
+	$('#progressBarDiv').append("<div id='progressbar'><div id='progress'></div></div>");
+	
+	var mediaTimer = setInterval(function () {
+		media.getCurrentPosition(
+			function (position) {
+				if (position > -1) {
+					$("#progress").width( position );
+				}
+			},
+			function (e) {
+				console.log("Error getting pos=" + e);
+			}
+		);
+	}, 1000);
+	
+	$('.podcastLi').on('click', function() {
+		media.stop();
+	});
+  
+	$('#pauseBtn').on('click', function() {
+		media.pause();
+	});
+	
+	$('#back10Sec').on('click', function() {
+		media.getCurrentPosition(
+			function (position) {
+				if(position > 10){
+					media.seekTo(position * 1000 - 10000);
+				}else{
+					media.seekTo(0);
+				}
+			}
+		);
+	});
+	
+	$('#forward30Sec').on('click', function() {
+		media.getCurrentPosition(
+			function (position) {
+					media.seekTo(position * 1000 + 30000);
+			}
+		);
+	});
+	
+	$('#playBtn').on('click', function() {
+		media.setVolume(1);
+		media.play();
+	});
+	
+	$( "#slider-fill" ).bind( "change", function(event, ui) {
+		var sliderVal = ($("#slider-fill").val());
+		media.setVolume(sliderVal / 100);
+	});
+}
+
+
+
 
 
 

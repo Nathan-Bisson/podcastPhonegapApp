@@ -38,6 +38,7 @@
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/js \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/plugins \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/css/index.css \
+/Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/css/jquery.mobile-1.4.4.min.css \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/css/ratchet-theme-android.css \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/css/ratchet-theme-android.min.css \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/css/ratchet-theme-ios.css \
@@ -49,8 +50,10 @@
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/fonts/ratchicons.ttf \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/fonts/ratchicons.woff \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/img/logo.png \
+/Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/img/SamplePhoto.jpg \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/js/index.js \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/js/jquery 2.1.0.js \
+/Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/js/jquery.mobile-1.4.4.min.js \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/js/ratchet.js \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/js/ratchet.min.js \
 /Users/HeyImNathan/documents/school/mad9135/MAD9135-ASSIGN2/platforms/android/assets/www/plugins/org.apache.cordova.file \
