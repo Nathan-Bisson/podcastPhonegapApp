@@ -72,6 +72,7 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         //app.receivedEvent('deviceready');
+		loadCastList();
     },
     // Update DOM on a Received Event
     
@@ -184,13 +185,58 @@ function loadCastList() {
 			// profit
 		})
 */
+	if(localStorage.getItem("podcasts") === null) {
+		alert("You have no saved podcasts!");
+	} else {
+		var retrievedData = localStorage.getItem("podcasts");
+		var podcastData = JSON.parse(retrievedData);
+		
+		for(i = 0; i < podcastData.length; i++) {
+			//alert(podcastData[i].title);
+			var podcastTitle = podcastData[i].title;
+			var podcastURL = podcastData[i].url;
+			var splitURL = podcastURL.split('/');
+			var podcastID = splitURL[4];
+			
+			document.getElementById("podcastUl").innerHTML += '<li id="' + podcastID + '" class="podcastLi table-view-cell">'+ podcastTitle + '<a class="icon icon-right pull-right"></a></li>';
+		}
+	}
+	
+	addListEvents();
 }
 
-function playPodcast(){
-	var podcastTitle = "The Podcast Title";
-	var podcastImgSrc = "img/SamplePhoto.jpg";
+function addListEvents() {
+	$('.podcastLi').on('click', function() {
+			$( "#firstPage" ).removeClass( "show" );
+			$( "#firstPage" ).addClass( "hide" );
+			$( "#secondPage" ).removeClass( "hide" );
+			$( "#secondPage" ).addClass( "show" );
+			$( "#addPodcastPage" ).removeClass( "show" );
+			$( "#addPodcastPage" ).addClass( "hide" );
+			
+			playPodcast(this.id);
+		});
+}
+
+function playPodcast(listID){
+	var retrievedData = localStorage.getItem("podcasts");
+	var podcastData = JSON.parse(retrievedData);
+	var itemID = listID;
+	var mediaURL;
 	
-	var media = new Media("https://dl.dropboxusercontent.com/u/887989/test.mp3",
+	for(i = 0; i < podcastData.length; i++) {
+		var podcastURL = podcastData[i].url;
+		var splitURL = podcastURL.split('/');
+		var podcastID = splitURL[4];
+	
+		if(itemID === podcastID) {
+			var podcastTitle = podcastData[i].title;
+			var podcastImgSrc = podcastData[i].image;
+			var mediaURL = podcastData[i].url;
+		}
+	}
+	
+	var media = new Media(mediaURL,
 	
 		function () {
 			console.log("playAudio():Audio Success");
@@ -201,11 +247,11 @@ function playPodcast(){
 	);
 	
 	media.setVolume(1);
-	media.play();
+	//media.play();
 	
 	$('#podcastTitle').append("<p>" + podcastTitle + "</p>");
 	
-	$('#podcastImg').prepend('<img src="' + podcastImgSrc + '" />');
+	$('#podcastImg').prepend('<img id="podcastImage" src="' + podcastImgSrc + '" />');
 	
 	$('#progressBarDiv').append("<div id='progressbar'><div id='progress'></div></div>");
 	
@@ -224,6 +270,7 @@ function playPodcast(){
 	
 	$('.podcastLi').on('click', function() {
 		media.stop();
+		media.release();
 	});
   
 	$('#pauseBtn').on('click', function() {

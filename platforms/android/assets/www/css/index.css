@@ -122,8 +122,18 @@ button{
 	text-align:center;
 }
 #podcastImg{
-	width:100%;
-	text-align:center;
+	width:100px;
+	height: 100px;
+	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
+}
+#podcastImage {
+	height: 100%;
+	width: 100%;
+	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
 }
 #progressBarDiv{
 	padding-top:30px;
