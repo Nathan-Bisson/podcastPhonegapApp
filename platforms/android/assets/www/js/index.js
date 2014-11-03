@@ -55,6 +55,8 @@ var app = {
 			document.getElementById("podcastTitle").innerHTML = "";
 			document.getElementById("podcastImg").innerHTML = "";
 			document.getElementById("progressBarDiv").innerHTML = "";
+			
+			loadCastList();
 		});
 		
 		$('#addBtn').on('click', function() {
@@ -185,6 +187,8 @@ function loadCastList() {
 			// profit
 		})
 */
+	document.getElementById("podcastUl").innerHTML = "";
+	
 	if(localStorage.getItem("podcasts") === null) {
 		alert("You have no saved podcasts!");
 	} else {
@@ -236,7 +240,7 @@ function playPodcast(listID){
 		}
 	}
 	
-	var media = new Media(mediaURL /*"https://dl.dropboxusercontent.com/u/887989/test.mp3"*/,
+	var media = new Media(mediaURL,
 	
 		function () {
 			console.log("playAudio():Audio Success");

@@ -55,6 +55,8 @@ var app = {
 			document.getElementById("podcastTitle").innerHTML = "";
 			document.getElementById("podcastImg").innerHTML = "";
 			document.getElementById("progressBarDiv").innerHTML = "";
+			
+			loadCastList();
 		});
 		
 		$('#addBtn').on('click', function() {
@@ -185,6 +187,8 @@ function loadCastList() {
 			// profit
 		})
 */
+	document.getElementById("podcastUl").innerHTML = "";
+	
 	if(localStorage.getItem("podcasts") === null) {
 		alert("You have no saved podcasts!");
 	} else {
