@@ -103,90 +103,90 @@ document.getElementById("addPodcastBtn").addEventListener("click", function(){
 });
 
 function addPodcast(podcastName, podcastURI) {
-	alert(podcastName);
-	//alert(podcastURI);
+	var networkState = navigator.connection.type;
 	
-	var request = new XMLHttpRequest();
-	
-	request.open("GET", podcastURI, true);
-	
-	request.onreadystatechange = function() {       
-		if (request.readyState == 4) {           
-			if (request.status == 200 || request.status == 0) {               
-				//console.log(request.responseText);
-				if (window.DOMParser)
-				{
-				  	parser=new DOMParser();
-				  	xmlDoc=parser.parseFromString(request.responseText,"text/xml");
-					console.log(xmlDoc);
-					var channelTag //= xmlDoc.getElementsByTagName('channel')[0];
-					var itemTag //= channelTag.getElementsByTagName('item')[0];
-					var itemTitle //= itemTag.getElementsByTagName('title')[0].childNodes[0].nodeValue;
-					//alert(itemTitle);
-					
-					for(i = 0; i < 2; i++)
+	if(networkState === Connection.NONE) {
+		alert("Oh no! You don't have a data connection.");
+	} else {
+		var request = new XMLHttpRequest();
+		
+		request.open("GET", podcastURI, true);
+		
+		request.onreadystatechange = function() {       
+			if (request.readyState == 4) {           
+				if (request.status == 200 || request.status == 0) {               
+					//console.log(request.responseText);
+					if (window.DOMParser)
 					{
-						var channelTag = xmlDoc.getElementsByTagName('channel')[0];
-						var itemTag = channelTag.getElementsByTagName('item')[i];
-						var imageTag = channelTag.getElementsByTagName('image')[0];
+						parser=new DOMParser();
+						xmlDoc=parser.parseFromString(request.responseText,"text/xml");
+						console.log(xmlDoc);
+						var channelTag //= xmlDoc.getElementsByTagName('channel')[0];
+						var itemTag //= channelTag.getElementsByTagName('item')[0];
+						var itemTitle //= itemTag.getElementsByTagName('title')[0].childNodes[0].nodeValue;
+						//alert(itemTitle);
 						
-						var itemTitle = itemTag.getElementsByTagName('title')[0].childNodes[0].nodeValue; //Holds Podcast title value
-						console.log(itemTitle);
-						var itemImage = imageTag.getElementsByTagName('url')[0].childNodes[0].nodeValue; //Holds Podcast image value
-						console.log(itemImage);
-						var itemFile = itemTag.getElementsByTagName('origEnclosureLink')[0].childNodes[0].nodeValue; //Holds Podcast MP3 value
-						
-						var encodedFile = encodeURI(itemFile);
-						console.log(itemFile);
-						console.log(encodedFile);
-						
-						//Download Podcast episode here
-						var androidFile = cordova.file.dataDirectory;
-						var addFileName = encodedFile.split('/');
-						console.log(addFileName[4]);
-						
-						/*var fileTransfer = new FileTransfer();
-						fileTransfer.download(encodedFile, androidFile + addFileName[4],
-							function(entry) {
-								console.log("download complete: " + entry.toURL());
-							},
-							function(error) {
-								console.log("download complete: " + error.code());
-							},
-							true
-						);*/
-						
-						if (localStorage.getItem("podcasts") === null) {
-							var podcasts = [];
-							podcasts.push({title: itemTitle , image: itemImage , url: itemFile });
-							localStorage.setItem('podcasts', JSON.stringify(podcasts));
-							console.log(localStorage.getItem('podcasts'));
-						} else {
-							var podcasts = JSON.parse(localStorage.getItem('podcasts') || []);
-							podcasts.push({title: itemTitle , image: itemImage , url: itemFile });
-   							localStorage.setItem('podcasts', JSON.stringify(podcasts));
-							console.log(localStorage.getItem('podcasts'));
+						for(i = 0; i < 2; i++)
+						{
+							var channelTag = xmlDoc.getElementsByTagName('channel')[0];
+							var itemTag = channelTag.getElementsByTagName('item')[i];
+							var imageTag = channelTag.getElementsByTagName('image')[0];
+							
+							var itemTitle = itemTag.getElementsByTagName('title')[0].childNodes[0].nodeValue; //Holds Podcast title value
+							console.log(itemTitle);
+							var itemImage = imageTag.getElementsByTagName('url')[0].childNodes[0].nodeValue; //Holds Podcast image value
+							console.log(itemImage);
+							var itemFile = itemTag.getElementsByTagName('origEnclosureLink')[0].childNodes[0].nodeValue; //Holds Podcast MP3 value
+							
+							var encodedFile = encodeURI(itemFile);
+							console.log(itemFile);
+							console.log(encodedFile);
+							
+							//Download Podcast episode here
+							var androidFile = cordova.file.dataDirectory;
+							var addFileName = encodedFile.split('/');
+							console.log(addFileName[4]);
+							
+							var fileTransfer = new FileTransfer();
+							fileTransfer.download(encodedFile, androidFile + addFileName[4],
+								function(entry) {
+									console.log("download complete: " + entry.toURL());
+									alert("Download for " + entry.toURL() + " complete!");
+								},
+								function(error) {
+									console.log("download complete: " + error.code());
+								},
+								true
+							);
+							
+							if (localStorage.getItem("podcasts") === null) {
+								var podcasts = [];
+								podcasts.push({title: itemTitle , image: itemImage , url: itemFile });
+								localStorage.setItem('podcasts', JSON.stringify(podcasts));
+								console.log(localStorage.getItem('podcasts'));
+							} else {
+								var podcasts = JSON.parse(localStorage.getItem('podcasts') || []);
+								podcasts.push({title: itemTitle , image: itemImage , url: itemFile });
+								localStorage.setItem('podcasts', JSON.stringify(podcasts));
+								console.log(localStorage.getItem('podcasts'));
+							}
+							
+							alert("Podcast added!");
 						}
 						
-						alert("Podcast added!");
-					}
-					
-					
-				}           
-			}       
-		}   
-	};
-	request.send();
+						
+					}           
+				}       
+			}   
+		};
+		request.send();
+	}
+	
+	
 	
 }
 
 function loadCastList() {
-	/*
-		window.resolveLocalFileSystemURI(cordova.file.dataDirectory, funtction(dirEntry) {
-			var reader = dirEntry.createReader();
-			// profit
-		})
-*/
 	document.getElementById("podcastUl").innerHTML = "";
 	
 	if(localStorage.getItem("podcasts") === null) {
@@ -196,7 +196,6 @@ function loadCastList() {
 		var podcastData = JSON.parse(retrievedData);
 		
 		for(i = 0; i < podcastData.length; i++) {
-			//alert(podcastData[i].title);
 			var podcastTitle = podcastData[i].title;
 			var podcastURL = podcastData[i].url;
 			var splitURL = podcastURL.split('/');
@@ -240,6 +239,25 @@ function playPodcast(listID){
 		}
 	}
 	
+	//failed play file off of device 
+	/*window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dirEntry) {
+		var reader = dirEntry.createReader();
+		reader.readEntries(function(entries) {
+			for(var i = 0; i < entries.length; i++) {
+      			var entry = entries[i];
+      			if (entry.isFile){
+        			var myURL = entry.fullPath;
+					var addFileName = myURL.split('/');
+					if(addFileName[1] === itemID) {
+						var podcastMedia = (cordova.file.dataDirectory + addFileName[1]);
+						console.log(myURL);
+						var mediaURL = myURL;
+					}
+      			}
+    		}
+		});
+	});*/
+	
 	var media = new Media(mediaURL,
 	
 		function () {
@@ -272,7 +290,7 @@ function playPodcast(listID){
 		);
 	}, 1000);
 	
-	$('.podcastLi').on('click', function() {
+	$('#backBTN').on('click', function() {
 		media.stop();
 		media.release();
 	});
@@ -301,6 +319,7 @@ function playPodcast(listID){
 		);
 	});
 	
+	$('#playBtn').off('click');
 	$('#playBtn').on('click', function() {
 		media.setVolume(1);
 		media.play();
@@ -309,6 +328,44 @@ function playPodcast(listID){
 	$( "#slider-fill" ).bind( "change", function(event, ui) {
 		var sliderVal = ($("#slider-fill").val());
 		media.setVolume(sliderVal / 100);
+	});
+	
+	$("#deletePodcastBtn").off("click");
+	$("#deletePodcastBtn").on("click", function() {
+			window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dirEntry) {
+			var reader = dirEntry.createReader();
+				reader.readEntries(function(entries) {
+					for(var i = 0; i < entries.length; i++) {
+						var entry = entries[i];
+						if (entry.isFile){
+							var myURL = entry.fullPath;
+							var addFileName = myURL.split('/');
+							if(addFileName[1] === itemID) {
+								entry.remove(function success() {
+									console.log("file removed");
+								}, function fail() {
+									console.log("file remains intact");
+								});
+							}
+						}
+					}
+				});
+			});
+		
+		for(i = 0; i < podcastData.length; i++) {	
+			var podcastURL = podcastData[i].url;
+			var splitURL = podcastURL.split('/');
+			var podcastID = splitURL[4];
+		
+			if(itemID === podcastID) { //CHECK
+				podcastData.splice(i,1);
+				localStorage["podcasts"] = JSON.stringify(podcastData);
+				alert("Podcast Deleted");
+				if(podcastData.length === 0) {
+					localStorage.removeItem("podcasts");
+				}
+			}
+		}
 	});
 }
 
