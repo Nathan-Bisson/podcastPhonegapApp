@@ -171,7 +171,7 @@ function addPodcast(podcastName, podcastURI) {
 								console.log(localStorage.getItem('podcasts'));
 							}
 							
-							alert("Podcast added!");
+							alert("Podcast has begun downloading!");
 						}
 						
 						
@@ -226,6 +226,7 @@ function playPodcast(listID){
 	var podcastData = JSON.parse(retrievedData);
 	var itemID = listID;
 	var mediaURL;
+	var media;
 	
 	for(i = 0; i < podcastData.length; i++) {
 		var podcastURL = podcastData[i].url;
@@ -235,12 +236,10 @@ function playPodcast(listID){
 		if(itemID === podcastID) {
 			var podcastTitle = podcastData[i].title;
 			var podcastImgSrc = podcastData[i].image;
-			var mediaURL = podcastData[i].url;
 		}
 	}
 	
-	//failed play file off of device 
-	/*window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dirEntry) {
+	window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dirEntry) {
 		var reader = dirEntry.createReader();
 		reader.readEntries(function(entries) {
 			for(var i = 0; i < entries.length; i++) {
@@ -250,26 +249,22 @@ function playPodcast(listID){
 					var addFileName = myURL.split('/');
 					if(addFileName[1] === itemID) {
 						var podcastMedia = (cordova.file.dataDirectory + addFileName[1]);
-						console.log(myURL);
-						var mediaURL = myURL;
+						mediaURL = podcastMedia;
+						media = new Media(mediaURL,
+	
+							function () {
+								console.log("playAudio():Audio Success");
+							},
+							function (err) {
+								console.log("playAudio():Audio Error: " + err);
+							}
+						);
+						media.setVolume(1);
 					}
       			}
     		}
 		});
-	});*/
-	
-	var media = new Media(mediaURL,
-	
-		function () {
-			console.log("playAudio():Audio Success");
-		},
-		function (err) {
-			console.log("playAudio():Audio Error: " + err);
-		}
-	);
-	
-	media.setVolume(1);
-	//media.play();
+	});
 	
 	$('#podcastTitle').append("<p>" + podcastTitle + "</p>");
 	
@@ -319,7 +314,7 @@ function playPodcast(listID){
 		);
 	});
 	
-	$('#playBtn').off('click');
+	$('#playBtn').off('click'); //remove listener for play button to prevent two casts from playing over each other.
 	$('#playBtn').on('click', function() {
 		media.setVolume(1);
 		media.play();
@@ -330,7 +325,7 @@ function playPodcast(listID){
 		media.setVolume(sliderVal / 100);
 	});
 	
-	$("#deletePodcastBtn").off("click");
+	$("#deletePodcastBtn").off("click"); //remove event from delete to prevent from delete multiple epsiodes 
 	$("#deletePodcastBtn").on("click", function() {
 			window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dirEntry) {
 			var reader = dirEntry.createReader();
@@ -357,7 +352,7 @@ function playPodcast(listID){
 			var splitURL = podcastURL.split('/');
 			var podcastID = splitURL[4];
 		
-			if(itemID === podcastID) { //CHECK
+			if(itemID === podcastID) { 
 				podcastData.splice(i,1);
 				localStorage["podcasts"] = JSON.stringify(podcastData);
 				alert("Podcast Deleted");
