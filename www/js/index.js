@@ -124,7 +124,8 @@ function addPodcast(podcastName, podcastURI) {
 						var channelTag //= xmlDoc.getElementsByTagName('channel')[0];
 						var itemTag //= channelTag.getElementsByTagName('item')[0];
 						var itemTitle //= itemTag.getElementsByTagName('title')[0].childNodes[0].nodeValue;
-						//alert(itemTitle);
+						var retrievedData = localStorage.getItem("podcasts");
+						var podcastData = JSON.parse(retrievedData);
 						
 						for(i = 0; i < 2; i++)
 						{
@@ -356,6 +357,18 @@ function playPodcast(listID){
 				podcastData.splice(i,1);
 				localStorage["podcasts"] = JSON.stringify(podcastData);
 				alert("Podcast Deleted");
+				$( "#firstPage" ).removeClass( "hide" );
+				$( "#firstPage" ).addClass( "show" );
+				$( "#secondPage" ).removeClass( "show" );
+				$( "#secondPage" ).addClass( "hide" );
+				$( "#addPodcastPage" ).removeClass( "show" );
+				$( "#addPodcastPage" ).addClass( "hide" );
+				
+				document.getElementById("podcastTitle").innerHTML = "";
+				document.getElementById("podcastImg").innerHTML = "";
+				document.getElementById("progressBarDiv").innerHTML = "";
+				
+				loadCastList();
 				if(podcastData.length === 0) {
 					localStorage.removeItem("podcasts");
 				}
